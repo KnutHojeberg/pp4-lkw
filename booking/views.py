@@ -16,24 +16,24 @@ def booking(request):
     validateWeekdays = isWeekdayValid(weekdays)
 
 
-if request.method == 'POST':
-    service = request.POST.get('service')
-    day = request.POST.get('day')
-    if service is None:
-        messages.success(request, "Please Select A Service!")
-        return redirect('booking')
+    if request.method == 'POST':
+        service = request.POST.get('service')
+        day = request.POST.get('day')
+        if service is None:
+            messages.success(request, "Please Select A Service!")
+            return redirect('booking')
 
-    # Store day and service in django session:
-    request.session['day'] = day
-    request.session['service'] = service
-    
-    return redirect('bookingSubmit')
+        # Store day and service in django session:
+        request.session['day'] = day
+        request.session['service'] = service
+
+        return redirect('bookingSubmit')
 
 
-return render(request, 'booking.html', {
-        'weekdays': weekdays,
-        'validateWeekdays': validateWeekdays,
-    })
+    return render(request, 'booking.html', {
+            'weekdays': weekdays,
+            'validateWeekdays': validateWeekdays,
+        })
 
 
 def bookingSubmit(request):
@@ -82,7 +82,7 @@ def bookingSubmit(request):
             messages.success(request, "Please Select A Service!")
 
 
-return render(request, 'bookingSubmit.html', {
+    return render(request, 'bookingSubmit.html', {
     'times': hour,
 })
 
@@ -123,7 +123,7 @@ if request.method == 'POST':
     return redirect('userUpdateSubmit', id=id)
 
 
-return render(request, 'userUpdate.html', {
+    return render(request, 'userUpdate.html', {
         'weekdays': weekdays,
         'validateWeekdays': validateWeekdays,
         'delta24': delta24,
