@@ -15,7 +15,6 @@ def booking(request):
     # Only show the days that are not full:
     validateWeekdays = isWeekdayValid(weekdays)
 
-
     if request.method == 'POST':
         service = request.POST.get('service')
         day = request.POST.get('day')
@@ -28,7 +27,6 @@ def booking(request):
         request.session['service'] = service
 
         return redirect('bookingSubmit')
-
 
     return render(request, 'booking.html', {
             'weekdays': weekdays,
@@ -81,10 +79,9 @@ def bookingSubmit(request):
         else:
             messages.success(request, "Please Select A Service!")
 
-
     return render(request, 'bookingSubmit.html', {
-    'times': hour,
-})
+        'times': hour,
+    })
 
 
 def userPanel(request):
@@ -111,24 +108,22 @@ def userUpdate(request, id):
     # Only show the days that are not full:
     validateWeekdays = isWeekdayValid(weekdays)
 
+    if request.method == 'POST':
+        service = request.POST.get('service')
+        day = request.POST.get('day')
 
-if request.method == 'POST':
-    service = request.POST.get('service')
-    day = request.POST.get('day')
+        # Store day and service in django session:
+        request.session['day'] = day
+        request.session['service'] = service
 
-    # Store day and service in django session:
-    request.session['day'] = day
-    request.session['service'] = service
-
-    return redirect('userUpdateSubmit', id=id)
-
+        return redirect('userUpdateSubmit', id=id)
 
     return render(request, 'userUpdate.html', {
-        'weekdays': weekdays,
-        'validateWeekdays': validateWeekdays,
-        'delta24': delta24,
-        'id': id,
-    })
+         'weekdays': weekdays,
+         'validateWeekdays': validateWeekdays,
+         'delta24': delta24,
+         'id': id,
+     })
 
 
 def userUpdateSubmit(request, id):
@@ -178,11 +173,10 @@ def userUpdateSubmit(request, id):
             messages.success(request, "Please Select A Service!")
         return redirect('userPanel')
 
-
-return render(request, 'userUpdateSubmit.html', {
-    'times': hour,
-    'id': id,
-})
+    return render(request, 'userUpdateSubmit.html', {
+        'times': hour,
+        'id': id,
+    })
 
 
 def staffPanel(request):
